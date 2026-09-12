@@ -634,7 +634,7 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
   <!-- ================================================================= -->
   <!-- ⬇️⬇️⬇️ МЕСТО ДЛЯ ВАШЕГО СКРИПТА ИЗ FIREBASE CONSOLE ⬇️⬇️⬇️ -->
   <!-- Вы можете вставить сюда ваш скопированный тег <script> целиком, -->
-  <!-- либо заполнить поля объекта н иже: -->
+  <!-- либо заполнить поля объекта ниже: -->
   <!-- ================================================================= -->
   <script>
   const firebaseConfig = {
@@ -1579,6 +1579,97 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
             existing.cards = cleanedCards;
             savedSetObj = existing;
           }
+        } else {
+          const newSet = {
+            id: 'set-' + Date.now(),
+            title,
+            description: desc,
+            createdAt: Date.now(),
+            lastStudied: null,
+            timesStudied: 0,
+            cards: cleanedCards
+          };
+          this.sets.unshift(newSet);
+          savedSetObj = newSet;
+        }
+
+        if (savedSetObj) {
+          await this.persistSetToCloud(savedSetObj);
+          try {
+            localStorage.setItem('lexicards_offline_sets', JSON.stringify(this.sets));
+          } catch (e) {}
+        }
+
+        this.renderSetsList();
+        if (this.currentSetId && this.editingSetId === this.currentSetId) {
+          this.openStudySet(this.currentSetId);
+        }
+
+        this.closeEditorModal();
+        this.toast('Модуль сохранён!', 'success');
+      }
+
+      getCurrentCard() {
+        return this.flashcardDeck[this.flashcardIndex] || { word: '', definition: '', starred: false, learned: false };
+      }
+
+      nextCard() {
+        if (this.flashcardDeck.length === 0) return;
+        this.flashcardIndex = (this.flashcardIndex + 1) % this.flashcardDeck.length;
+        this.updateFlashcardView();
+      }
+
+      prevCard() {
+        if (this.flashcardDeck.length === 0) return;
+        this.flashcardIndex = (this.flashcardIndex - 1 + this.flashcardDeck.length) % this.flashcardDeck.length;
+        this.updateFlashcardView();
+      }
+
+      shuffleCards() {
+        if (this.flashcardDeck.length <= 1) return;
+        for (let i = this.flashcardDeck.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.flashcardDeck[i], this.flashcardDeck[j]] = [this.flashcardDeck[j], this.flashcardDeck[i]];
+        }
+        this.flashcardIndex = 0;
+        this.updateFlashcardView();
+        this.toast('Карточки перемешаны', 'info');
+      }
+
+      toggleStarCurrentCard() {
+        const card = this.getCurrentCard();
+        if (!card) return;
+        card.starred = !card.starred;
+        const starBtn = document.getElementById('flashcardStarBtn');
+        if (card.starred) {
+          starBtn.classList.add('text-amber-500');
+          starBtn.classList.remove('text-slate-400');
+        } else {
+          starBtn.classList.remove('text-amber-500');
+          starBtn.classList.add('text-slate-400');
+        }
+        const set = this.sets.find(s => s.id === this.currentSetId);
+        if (set) this.persistSetToCloud(set);
+      }
+
+      recordCardResult(cardId, isCorrect) {
+        const set = this.sets.find(s => s.id === this.currentSetId);
+        if (!set) return;
+        const card = set.cards.find(c => c.id === cardId);
+        if (!card) return;
+
+        if (isCorrect) {
+          card.correctCount = (card.correctCount || 0) + 1;
+          if (card.correctCount >= 2) {
+            card.learned = true;
+          }
+        } else {
+          card.incorrectCount = (card.incorrectCount || 0) + 1;
+          card.learned = false;
+        }
+        this.persistSetToCloud(set);
+      }
+
       startFlashcardsMode(direction = 'word-def', options = {}) {
         const set = this.sets.find(s => s.id === this.currentSetId);
         if (!set || set.cards.length === 0) {
@@ -1969,12 +2060,6 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           this.quizIndex++;
           this.loadNextQuizQuestion();
         }, 1100);
-      }
-
-        setTimeout(() => {
-          this.quizIndex++;
-          this.loadNextQuizQuestion();
-        }, 1600);
       }
 
       giveQuizHint() {
