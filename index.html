@@ -181,53 +181,84 @@
       </div>
 
       <!-- MODE SELECTOR CARDS -->
-      <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
-        <button onclick="app.startMode('flashcards')" class="flex flex-col items-center justify-center p-4 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
-          <div class="w-12 h-12 rounded-xl bg-blue-100 group-hover:bg-blue-600 group-hover:text-white text-blue-600 flex items-center justify-center mb-2 transition-colors">
-            <i data-lucide="layers" class="w-6 h-6"></i>
+      <div class="grid grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
+        <button onclick="app.startMode('flashcards-word-def')" class="flex flex-col items-center justify-center p-3.5 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
+          <div class="w-11 h-11 rounded-xl bg-blue-100 group-hover:bg-blue-600 group-hover:text-white text-blue-600 flex items-center justify-center mb-1.5 transition-colors">
+            <i data-lucide="layers" class="w-5 h-5"></i>
           </div>
-          <span class="text-sm font-bold text-slate-800">Карточки</span>
-          <span class="text-xs text-slate-400 text-center mt-0.5">3D флип и просмотр</span>
+          <span class="text-xs sm:text-sm font-bold text-slate-800 text-center">Слово → Перевод</span>
+          <span class="text-[11px] text-slate-400 text-center mt-0.5">3D: знаю / не знаю</span>
         </button>
 
-        <button onclick="app.startMode('choice-def')" class="flex flex-col items-center justify-center p-4 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
-          <div class="w-12 h-12 rounded-xl bg-indigo-100 group-hover:bg-indigo-600 group-hover:text-white text-indigo-600 flex items-center justify-center mb-2 transition-colors">
-            <i data-lucide="check-square" class="w-6 h-6"></i>
+        <button onclick="app.startMode('flashcards-def-word')" class="flex flex-col items-center justify-center p-3.5 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
+          <div class="w-11 h-11 rounded-xl bg-cyan-100 group-hover:bg-cyan-600 group-hover:text-white text-cyan-600 flex items-center justify-center mb-1.5 transition-colors">
+            <i data-lucide="repeat" class="w-5 h-5"></i>
           </div>
-          <span class="text-sm font-bold text-slate-800">Тест: Перевод</span>
-          <span class="text-xs text-slate-400 text-center mt-0.5">4 варианта значения</span>
+          <span class="text-xs sm:text-sm font-bold text-slate-800 text-center">Перевод → Слово</span>
+          <span class="text-[11px] text-slate-400 text-center mt-0.5">3D: знаю / не знаю</span>
         </button>
 
-        <button onclick="app.startMode('choice-word')" class="flex flex-col items-center justify-center p-4 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
-          <div class="w-12 h-12 rounded-xl bg-violet-100 group-hover:bg-violet-600 group-hover:text-white text-violet-600 flex items-center justify-center mb-2 transition-colors">
-            <i data-lucide="help-circle" class="w-6 h-6"></i>
+        <button onclick="app.startMode('choice-def')" class="flex flex-col items-center justify-center p-3.5 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
+          <div class="w-11 h-11 rounded-xl bg-indigo-100 group-hover:bg-indigo-600 group-hover:text-white text-indigo-600 flex items-center justify-center mb-1.5 transition-colors">
+            <i data-lucide="check-square" class="w-5 h-5"></i>
           </div>
-          <span class="text-sm font-bold text-slate-800">Тест: Слово</span>
-          <span class="text-xs text-slate-400 text-center mt-0.5">4 варианта слова</span>
+          <span class="text-xs sm:text-sm font-bold text-slate-800 text-center">Тест: Перевод</span>
+          <span class="text-[11px] text-slate-400 text-center mt-0.5">4 варианта значения</span>
         </button>
 
-        <button onclick="app.startMode('write-word')" class="flex flex-col items-center justify-center p-4 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
-          <div class="w-12 h-12 rounded-xl bg-emerald-100 group-hover:bg-emerald-600 group-hover:text-white text-emerald-600 flex items-center justify-center mb-2 transition-colors">
-            <i data-lucide="keyboard" class="w-6 h-6"></i>
+        <button onclick="app.startMode('choice-word')" class="flex flex-col items-center justify-center p-3.5 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
+          <div class="w-11 h-11 rounded-xl bg-violet-100 group-hover:bg-violet-600 group-hover:text-white text-violet-600 flex items-center justify-center mb-1.5 transition-colors">
+            <i data-lucide="help-circle" class="w-5 h-5"></i>
           </div>
-          <span class="text-sm font-bold text-slate-800">Письмо: Слово</span>
-          <span class="text-xs text-slate-400 text-center mt-0.5">Ввод слова по переводу</span>
+          <span class="text-xs sm:text-sm font-bold text-slate-800 text-center">Тест: Слово</span>
+          <span class="text-[11px] text-slate-400 text-center mt-0.5">4 варианта слова</span>
         </button>
 
-        <button onclick="app.startMode('write-def')" class="col-span-2 lg:col-span-1 flex flex-col items-center justify-center p-4 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
-          <div class="w-12 h-12 rounded-xl bg-amber-100 group-hover:bg-amber-600 group-hover:text-white text-amber-600 flex items-center justify-center mb-2 transition-colors">
-            <i data-lucide="pen-tool" class="w-6 h-6"></i>
+        <button onclick="app.startMode('write-word')" class="flex flex-col items-center justify-center p-3.5 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
+          <div class="w-11 h-11 rounded-xl bg-emerald-100 group-hover:bg-emerald-600 group-hover:text-white text-emerald-600 flex items-center justify-center mb-1.5 transition-colors">
+            <i data-lucide="keyboard" class="w-5 h-5"></i>
           </div>
-          <span class="text-sm font-bold text-slate-800">Письмо: Перевод</span>
-          <span class="text-xs text-slate-400 text-center mt-0.5">Ввод значения по слову</span>
+          <span class="text-xs sm:text-sm font-bold text-slate-800 text-center">Письмо: Слово</span>
+          <span class="text-[11px] text-slate-400 text-center mt-0.5">Ввод по переводу</span>
+        </button>
+
+        <button onclick="app.startMode('write-def')" class="flex flex-col items-center justify-center p-3.5 bg-white hover:bg-indigo-50 border-2 border-transparent hover:border-indigo-500 rounded-2xl shadow-sm transition-all group">
+          <div class="w-11 h-11 rounded-xl bg-amber-100 group-hover:bg-amber-600 group-hover:text-white text-amber-600 flex items-center justify-center mb-1.5 transition-colors">
+            <i data-lucide="pen-tool" class="w-5 h-5"></i>
+          </div>
+          <span class="text-xs sm:text-sm font-bold text-slate-800 text-center">Письмо: Перевод</span>
+          <span class="text-[11px] text-slate-400 text-center mt-0.5">Ввод по слову</span>
         </button>
       </div>
 
-      <!-- Preview of all cards in set with speech synthesizer -->
+      <!-- Preview of all cards in set with filter tabs and inline know/don't know toggles -->
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h3 class="font-bold text-slate-800">Термины в этом модуле</h3>
-          <span id="termsCountLabel" class="text-xs font-semibold text-slate-400"></span>
+        <div class="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center space-x-2">
+            <h3 class="font-bold text-slate-800">Термины в модуле</h3>
+            <span id="termsCountLabel" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600"></span>
+          </div>
+
+          <!-- Starred / All Filter Tabs & Learn Starred Action -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="inline-flex bg-slate-100 p-1 rounded-xl text-xs font-medium">
+              <button id="filterTabAll" onclick="app.setTermsFilter('all')" class="px-3 py-1 rounded-lg bg-white shadow-sm text-indigo-600 font-bold transition-all">
+                Все
+              </button>
+              <button id="filterTabStarred" onclick="app.setTermsFilter('starred')" class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center space-x-1">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                <span id="filterStarredCountLabel">Избранные</span>
+              </button>
+              <button id="filterTabUnlearned" onclick="app.setTermsFilter('unlearned')" class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                Не выучены
+              </button>
+            </div>
+
+            <button id="studyStarredBtn" onclick="app.startMode('flashcards-word-def', { onlyStarred: true })" class="hidden inline-flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm transition-all">
+              <i data-lucide="play" class="w-3.5 h-3.5"></i>
+              <span>Учить только избранные</span>
+            </button>
+          </div>
         </div>
         <div id="termsListContainer" class="divide-y divide-slate-100 max-h-96 overflow-y-auto">
           <!-- Items injected via JS -->
@@ -236,25 +267,28 @@
     </section>
 
     <!-- VIEW 3: FLASHCARDS FLIP MODE -->
-    <section id="view-mode-flashcards" class="hidden max-w-2xl mx-auto space-y-6">
+    <section id="view-mode-flashcards" class="hidden max-w-2xl mx-auto space-y-5">
       <div class="flex items-center justify-between">
         <button onclick="app.switchView('study')" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-slate-800">
           <i data-lucide="x" class="w-4 h-4 mr-1"></i> Закончить
         </button>
-        <span id="flashcardCounter" class="text-sm font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">1 / 10</span>
+        <div class="flex items-center space-x-2">
+          <span id="flashcardModeBadge" class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">Слово → Перевод</span>
+          <span id="flashcardCounter" class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">1 / 10</span>
+        </div>
         <button onclick="app.toggleStarCurrentCard()" id="flashcardStarBtn" class="p-2 text-slate-400 hover:text-amber-500 rounded-xl transition-colors">
           <i data-lucide="star" class="w-5 h-5"></i>
         </button>
       </div>
 
       <!-- Flashcard 3D element -->
-      <div class="perspective-1000 w-full h-80 sm:h-96 cursor-pointer" onclick="app.flipCard()">
+      <div class="perspective-1000 w-full h-80 sm:h-96 cursor-pointer select-none" onclick="app.flipCard()">
         <div id="flashcardInner" class="card-flip transform-style-3d relative w-full h-full rounded-3xl shadow-lg border border-slate-200">
-          <!-- FRONT: Word / Term -->
+          <!-- FRONT -->
           <div class="backface-hidden absolute inset-0 bg-white rounded-3xl p-8 flex flex-col justify-between items-center text-center">
             <div class="w-full flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-slate-400">
-              <span>Слово / Термин</span>
-              <button onclick="event.stopPropagation(); app.speakText(app.getCurrentCard().word)" class="p-2 hover:bg-slate-100 text-slate-500 rounded-xl">
+              <span id="flashcardFrontLabel">Слово / Термин</span>
+              <button onclick="event.stopPropagation(); app.speakText(app.getCurrentCardFrontText())" class="p-2 hover:bg-slate-100 text-slate-500 rounded-xl">
                 <i data-lucide="volume-2" class="w-5 h-5"></i>
               </button>
             </div>
@@ -262,15 +296,15 @@
               <div id="flashcardFrontWord" class="text-3xl sm:text-4xl font-extrabold text-slate-800 break-words">Word</div>
             </div>
             <span class="text-xs text-slate-400 flex items-center font-medium">
-              <i data-lucide="rotate-cw" class="w-3.5 h-3.5 mr-1"></i> Нажмите для переворота
+              <i data-lucide="rotate-cw" class="w-3.5 h-3.5 mr-1"></i> Нажмите для переворота карточки
             </span>
           </div>
 
-          <!-- BACK: Definition / Translation -->
+          <!-- BACK -->
           <div class="backface-hidden rotate-y-180 absolute inset-0 bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-3xl p-8 flex flex-col justify-between items-center text-center">
             <div class="w-full flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-indigo-300">
-              <span>Перевод / Значение</span>
-              <button onclick="event.stopPropagation(); app.speakText(app.getCurrentCard().definition)" class="p-2 hover:bg-slate-800 text-indigo-300 rounded-xl">
+              <span id="flashcardBackLabel">Перевод / Значение</span>
+              <button onclick="event.stopPropagation(); app.speakText(app.getCurrentCardBackText())" class="p-2 hover:bg-slate-800 text-indigo-300 rounded-xl">
                 <i data-lucide="volume-2" class="w-5 h-5"></i>
               </button>
             </div>
@@ -284,18 +318,30 @@
         </div>
       </div>
 
-      <!-- Controls -->
-      <div class="flex items-center justify-between gap-4 pt-2">
-        <button onclick="app.prevCard()" class="flex-1 py-3 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl flex items-center justify-center space-x-2 shadow-sm">
-          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      <!-- KNOWLEDGE BUTTONS: Appear when card is flipped -->
+      <div id="flashcardKnowledgeActions" class="opacity-30 pointer-events-none transition-all duration-300 flex items-center justify-between gap-3 pt-1">
+        <button onclick="app.rateFlashcard(false)" class="flex-1 py-3.5 px-4 bg-rose-50 hover:bg-rose-100 border-2 border-rose-200 hover:border-rose-400 text-rose-700 font-bold rounded-2xl flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition-all">
+          <i data-lucide="x-circle" class="w-5 h-5 text-rose-600"></i>
+          <span>Не знаю (повторить)</span>
+        </button>
+        <button onclick="app.rateFlashcard(true)" class="flex-1 py-3.5 px-4 bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-200 hover:border-emerald-400 text-emerald-700 font-bold rounded-2xl flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition-all">
+          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+          <span>Знаю (выучено)</span>
+        </button>
+      </div>
+
+      <!-- Navigation & Shuffle Controls -->
+      <div class="flex items-center justify-between gap-3 pt-1">
+        <button onclick="app.prevCard()" class="flex-1 py-2.5 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl flex items-center justify-center space-x-1.5 shadow-sm text-xs">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
           <span>Назад</span>
         </button>
-        <button onclick="app.shuffleCards()" title="Перемешать" class="p-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl shadow-sm">
-          <i data-lucide="shuffle" class="w-5 h-5"></i>
+        <button onclick="app.shuffleCards()" title="Перемешать" class="p-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl shadow-sm">
+          <i data-lucide="shuffle" class="w-4 h-4"></i>
         </button>
-        <button onclick="app.nextCard()" class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl flex items-center justify-center space-x-2 shadow-sm shadow-indigo-200">
+        <button onclick="app.nextCard()" class="flex-1 py-2.5 px-4 bg-slate-800 hover:bg-slate-900 text-white font-semibold rounded-xl flex items-center justify-center space-x-1.5 shadow-sm text-xs">
           <span>Вперёд</span>
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </button>
       </div>
     </section>
@@ -349,7 +395,7 @@
           </div>
         </div>
 
-        <!-- Feedback Alert Container -->
+        <!-- Feedback Alert Container with "Я ответил правильно" override button -->
         <div id="quizFeedbackBox" class="hidden p-4 rounded-2xl text-sm font-medium transition-all">
           <!-- Success / Error messages injected -->
         </div>
@@ -606,14 +652,15 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { 
       getAuth, 
-      signInAnonymously, 
       signInWithCustomToken, 
       onAuthStateChanged,
       signInWithEmailAndPassword,
       createUserWithEmailAndPassword,
       signInWithPopup,
       GoogleAuthProvider,
-      signOut
+      signOut,
+      setPersistence,
+      browserLocalPersistence
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { 
       getFirestore, 
@@ -668,6 +715,8 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         this.sets = [];
         this.currentSetId = null;
         this.currentMode = null;
+        this.termsFilter = 'all'; // 'all' | 'starred' | 'unlearned'
+        this.quizTimeoutId = null;
         
         // Cloud & Auth properties
         this.db = null;
@@ -682,6 +731,7 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         this.flashcardIndex = 0;
         this.isFlipped = false;
         this.flashcardDeck = [];
+        this.flashcardDirection = 'word-def'; // 'word-def' or 'def-word'
 
         // Quiz state
         this.quizDeck = [];
@@ -700,7 +750,23 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
       }
 
       async init() {
-        this.sets = [...DEFAULT_SETS];
+        // Загрузка резервных данных из локального кэша, если сеть/сессия временно недоступна
+        try {
+          const localCache = localStorage.getItem('lexicards_offline_sets');
+          if (localCache) {
+            const parsed = JSON.parse(localCache);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              this.sets = parsed;
+            } else {
+              this.sets = [...DEFAULT_SETS];
+            }
+          } else {
+            this.sets = [...DEFAULT_SETS];
+          }
+        } catch (e) {
+          this.sets = [...DEFAULT_SETS];
+        }
+
         setTimeout(() => lucide.createIcons(), 50);
         window.addEventListener('keydown', (e) => this.handleGlobalKeydown(e));
         this.renderSetsList();
@@ -710,7 +776,6 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
       async initCloudStorage() {
         try {
-          // Автоматический поиск конфигурации в любых форматах
           let rawConfig = null;
           if (typeof __firebase_config !== 'undefined' && __firebase_config) {
             rawConfig = __firebase_config;
@@ -722,7 +787,7 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
             rawConfig = window.firebaseConfig;
           }
 
-          if (!rawConfig || rawConfig.apiKey === "ВАШ_API_KEY" || rawConfig.apiKey === "ВСТАВЬТЕ_API_KEY_ИЗ_ВАШЕГО_SCRIPTA") {
+          if (!rawConfig || rawConfig.apiKey === "ВАШ_API_KEY") {
             console.warn('Firebase config не настроен, используется локальный режим');
             return;
           }
@@ -733,10 +798,15 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           this.auth = getAuth(firebaseApp);
           this.db = getFirestore(firebaseApp);
 
+          // Устанавливаем долговременное сохранение сессии в браузере
+          try {
+            await setPersistence(this.auth, browserLocalPersistence);
+          } catch (pErr) {
+            console.warn('Не удалось принудительно выставить browserLocalPersistence:', pErr);
+          }
+
           if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
             await signInWithCustomToken(this.auth, __initial_auth_token);
-          } else if (!this.auth.currentUser) {
-            await signInAnonymously(this.auth);
           }
 
           onAuthStateChanged(this.auth, (user) => {
@@ -747,6 +817,7 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
               this.attachFirestoreListener();
             } else {
               this.currentUser = null;
+              this.userId = null;
               this.updateAuthUI(null);
             }
           });
@@ -806,6 +877,12 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
           loadedSets.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
           this.sets = loadedSets;
+          
+          // Сохраняем копию в локальный кэш, чтобы данные не пропадали при сбросе сессии
+          try {
+            localStorage.setItem('lexicards_offline_sets', JSON.stringify(this.sets));
+          } catch (e) {}
+
           this.renderSetsList();
 
           if (this.currentSetId) {
@@ -893,12 +970,20 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         }
         try {
           const provider = new GoogleAuthProvider();
+          provider.setCustomParameters({ prompt: 'select_account' });
           await signInWithPopup(this.auth, provider);
           this.closeAuthModal();
           this.toast('Вход через Google выполнен успешно!');
         } catch (err) {
-          console.error(err);
-          this.toast('Не удалось войти через Google: ' + err.message, 'error');
+          console.error('Google auth error:', err);
+          if (err.code === 'auth/popup-closed-by-user') {
+            return;
+          }
+          if (err.code === 'auth/network-request-failed' || err.message?.includes('500')) {
+            this.toast('Сбой сервера Google (500). Попробуйте войти через Email / Пароль', 'error');
+            return;
+          }
+          this.toast('Ошибка входа Google. Войдите через Email / Пароль', 'error');
         }
       }
 
@@ -906,8 +991,7 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         if (!this.auth) return;
         try {
           await signOut(this.auth);
-          await signInAnonymously(this.auth);
-          this.toast('Вы вышли из аккаунта. Включен гостевой режим.', 'info');
+          this.toast('Вы вышли из аккаунта.', 'info');
         } catch (err) {
           console.error('Logout error:', err);
         }
@@ -1146,39 +1230,113 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
         this.currentSetId = setId;
         this.updateSetHeaderStats(set);
-
-        const termsContainer = document.getElementById('termsListContainer');
-        document.getElementById('termsCountLabel').innerText = `${set.cards.length} терминов`;
-
-        if (set.cards.length === 0) {
-          termsContainer.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">В этом модуле пока нет карточек. Нажмите «Редактировать карточки», чтобы добавить.</div>`;
-        } else {
-          termsContainer.innerHTML = set.cards.map((card) => `
-            <div class="px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 pr-4 items-center">
-                <div class="font-bold text-sm text-slate-800 flex items-center space-x-2">
-                  <span>${this.escapeHtml(card.word)}</span>
-                  <button onclick="app.speakText('${this.escapeHtml(card.word)}')" class="text-slate-400 hover:text-indigo-600 transition-colors">
-                    <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                  </button>
-                  ${card.learned ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700">Выучено</span>' : ''}
-                </div>
-                <div class="text-sm text-slate-600">${this.escapeHtml(card.definition)}</div>
-              </div>
-              <div class="flex items-center space-x-2">
-                <span class="text-[11px] font-medium text-slate-400 hidden sm:inline" title="Правильных ответов / Ошибок">
-                  ✓ ${card.correctCount || 0} / ✗ ${card.incorrectCount || 0}
-                </span>
-                <button onclick="app.toggleCardStarInline('${card.id}')" class="p-1.5 text-slate-300 hover:text-amber-500 transition-colors ${card.starred ? '!text-amber-500' : ''}">
-                  <i data-lucide="star" class="w-4 h-4 ${card.starred ? 'fill-amber-500' : ''}"></i>
-                </button>
-              </div>
-            </div>
-          `).join('');
-        }
+        this.renderTermsList();
 
         this.switchView('study');
         lucide.createIcons();
+      }
+
+      setTermsFilter(filter) {
+        this.termsFilter = filter;
+
+        const tabAll = document.getElementById('filterTabAll');
+        const tabStarred = document.getElementById('filterTabStarred');
+        const tabUnlearned = document.getElementById('filterTabUnlearned');
+        const studyStarredBtn = document.getElementById('studyStarredBtn');
+
+        const activeClass = 'px-3 py-1 rounded-lg bg-white shadow-sm text-indigo-600 font-bold transition-all';
+        const inactiveClass = 'px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition-all';
+
+        if (tabAll) tabAll.className = (filter === 'all') ? activeClass : inactiveClass;
+        if (tabStarred) tabStarred.className = (filter === 'starred') ? activeClass : inactiveClass;
+        if (tabUnlearned) tabUnlearned.className = (filter === 'unlearned') ? activeClass : inactiveClass;
+
+        if (studyStarredBtn) {
+          if (filter === 'starred') {
+            studyStarredBtn.classList.remove('hidden');
+          } else {
+            studyStarredBtn.classList.add('hidden');
+          }
+        }
+
+        this.renderTermsList();
+      }
+
+      renderTermsList() {
+        const set = this.sets.find(s => s.id === this.currentSetId);
+        if (!set) return;
+
+        const termsContainer = document.getElementById('termsListContainer');
+        const countLabel = document.getElementById('termsCountLabel');
+        const starredCount = set.cards.filter(c => c.starred).length;
+        const starredLabel = document.getElementById('filterStarredCountLabel');
+        if (starredLabel) starredLabel.innerText = `Избранные (${starredCount})`;
+
+        let cardsToDisplay = [...set.cards];
+        if (this.termsFilter === 'starred') {
+          cardsToDisplay = cardsToDisplay.filter(c => c.starred);
+        } else if (this.termsFilter === 'unlearned') {
+          cardsToDisplay = cardsToDisplay.filter(c => !c.learned);
+        }
+
+        if (countLabel) countLabel.innerText = `${cardsToDisplay.length} из ${set.cards.length}`;
+
+        if (cardsToDisplay.length === 0) {
+          const emptyText = this.termsFilter === 'starred' 
+            ? 'В избранном пока нет карточек. Нажмите на звёздочку ★ рядом с любым словом!'
+            : (this.termsFilter === 'unlearned' ? 'Все слова в этом модуле уже выучены! 🎉' : 'В этом модуле пока нет карточек.');
+          termsContainer.innerHTML = `<div class="p-8 text-center text-xs text-slate-400">${emptyText}</div>`;
+          return;
+        }
+
+        termsContainer.innerHTML = cardsToDisplay.map((card) => `
+          <div class="px-5 py-3.5 flex items-center justify-between hover:bg-slate-50 transition-colors group">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 pr-4 items-center">
+              <div class="font-bold text-sm text-slate-800 flex items-center space-x-2">
+                <span>${this.escapeHtml(card.word)}</span>
+                <button onclick="app.speakText('${this.escapeHtml(card.word)}')" title="Озвучить" class="text-slate-400 hover:text-indigo-600 transition-colors">
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+              <div class="text-sm text-slate-600">${this.escapeHtml(card.definition)}</div>
+            </div>
+
+            <!-- Know / Don't know manual status button & Star -->
+            <div class="flex items-center space-x-2 shrink-0">
+              <button onclick="app.toggleCardLearnedInline('${card.id}')" 
+                      title="${card.learned ? 'Нажмите, чтобы сбросить статус на Не знаю' : 'Нажмите, чтобы отметить Выучено'}"
+                      class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center space-x-1 ${card.learned ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-800' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}">
+                <i data-lucide="${card.learned ? 'check' : 'circle'}" class="w-3 h-3 ${card.learned ? 'text-emerald-700' : 'text-slate-400'}"></i>
+                <span>${card.learned ? 'Знаю' : 'Не знаю'}</span>
+              </button>
+
+              <button onclick="app.toggleCardStarInline('${card.id}')" class="p-1.5 text-slate-300 hover:text-amber-500 transition-colors ${card.starred ? '!text-amber-500' : ''}">
+                <i data-lucide="star" class="w-4 h-4 ${card.starred ? 'fill-amber-500' : ''}"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        lucide.createIcons();
+      }
+
+      async toggleCardLearnedInline(cardId) {
+        const set = this.sets.find(s => s.id === this.currentSetId);
+        if (!set) return;
+        const card = set.cards.find(c => c.id === cardId);
+        if (card) {
+          card.learned = !card.learned;
+          if (card.learned) {
+            card.correctCount = Math.max(card.correctCount || 0, 2);
+            this.playSound('correct');
+          } else {
+            card.correctCount = 0;
+            this.playSound('flip');
+          }
+          this.updateSetHeaderStats(set);
+          this.renderTermsList();
+          await this.persistSetToCloud(set);
+        }
       }
 
       async toggleCardStarInline(cardId) {
@@ -1187,7 +1345,8 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         const card = set.cards.find(c => c.id === cardId);
         if (card) {
           card.starred = !card.starred;
-          this.openStudySet(this.currentSetId);
+          this.updateSetHeaderStats(set);
+          this.renderTermsList();
           await this.persistSetToCloud(set);
         }
       }
@@ -1420,47 +1579,44 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
             existing.cards = cleanedCards;
             savedSetObj = existing;
           }
-          this.toast('Модуль успешно обновлён');
-        } else {
-          const newSet = {
-            id: 'set-' + Date.now(),
-            title,
-            description: desc,
-            createdAt: Date.now(),
-            lastStudied: null,
-            timesStudied: 0,
-            cards: cleanedCards
-          };
-          this.sets.unshift(newSet);
-          this.currentSetId = newSet.id;
-          savedSetObj = newSet;
-          this.toast('Новый модуль создан!');
-        }
-
-        this.closeEditorModal();
-        this.renderSetsList();
-
-        if (savedSetObj) {
-          await this.persistSetToCloud(savedSetObj);
-        }
-
-        if (this.currentSetId) {
-          this.openStudySet(this.currentSetId);
-        }
-      }
-
-      startFlashcardsMode() {
+      startFlashcardsMode(direction = 'word-def', options = {}) {
         const set = this.sets.find(s => s.id === this.currentSetId);
         if (!set || set.cards.length === 0) {
           this.toast('В этом модуле нет карточек', 'error');
           return;
         }
 
-        this.flashcardDeck = [...set.cards];
+        let cards = [...set.cards];
+        if (options.onlyStarred) {
+          cards = cards.filter(c => c.starred);
+          if (cards.length === 0) {
+            this.toast('Нет избранных карточек для тренировки', 'info');
+            return;
+          }
+        }
+
+        this.flashcardDirection = direction;
+        this.flashcardDeck = cards;
         this.flashcardIndex = 0;
         this.isFlipped = false;
+
+        const modeBadge = document.getElementById('flashcardModeBadge');
+        if (modeBadge) {
+          modeBadge.innerText = (direction === 'def-word') ? 'Перевод → Слово' : 'Слово → Перевод';
+        }
+
         this.updateFlashcardView();
         this.switchView('mode-flashcards');
+      }
+
+      getCurrentCardFrontText() {
+        const card = this.getCurrentCard();
+        return (this.flashcardDirection === 'def-word') ? card.definition : card.word;
+      }
+
+      getCurrentCardBackText() {
+        const card = this.getCurrentCard();
+        return (this.flashcardDirection === 'def-word') ? card.word : card.definition;
       }
 
       updateFlashcardView() {
@@ -1471,8 +1627,30 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         const inner = document.getElementById('flashcardInner');
         inner.classList.remove('rotate-y-180');
 
-        document.getElementById('flashcardFrontWord').innerText = card.word;
-        document.getElementById('flashcardBackDef').innerText = card.definition;
+        // Hide knowledge buttons until flipped
+        const actionsBox = document.getElementById('flashcardKnowledgeActions');
+        if (actionsBox) {
+          actionsBox.classList.add('opacity-30', 'pointer-events-none');
+          actionsBox.classList.remove('opacity-100', 'pointer-events-auto');
+        }
+
+        const frontWordEl = document.getElementById('flashcardFrontWord');
+        const backDefEl = document.getElementById('flashcardBackDef');
+        const frontLabel = document.getElementById('flashcardFrontLabel');
+        const backLabel = document.getElementById('flashcardBackLabel');
+
+        if (this.flashcardDirection === 'def-word') {
+          frontWordEl.innerText = card.definition;
+          backDefEl.innerText = card.word;
+          if (frontLabel) frontLabel.innerText = 'Перевод / Значение';
+          if (backLabel) backLabel.innerText = 'Слово / Термин';
+        } else {
+          frontWordEl.innerText = card.word;
+          backDefEl.innerText = card.definition;
+          if (frontLabel) frontLabel.innerText = 'Слово / Термин';
+          if (backLabel) backLabel.innerText = 'Перевод / Значение';
+        }
+
         document.getElementById('flashcardCounter').innerText = `${this.flashcardIndex + 1} / ${this.flashcardDeck.length}`;
 
         const starBtn = document.getElementById('flashcardStarBtn');
@@ -1488,93 +1666,74 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
       flipCard() {
         this.isFlipped = !this.isFlipped;
         const inner = document.getElementById('flashcardInner');
+        const actionsBox = document.getElementById('flashcardKnowledgeActions');
+
         if (this.isFlipped) {
           inner.classList.add('rotate-y-180');
+          if (actionsBox) {
+            actionsBox.classList.remove('opacity-30', 'pointer-events-none');
+            actionsBox.classList.add('opacity-100', 'pointer-events-auto');
+          }
         } else {
           inner.classList.remove('rotate-y-180');
+          if (actionsBox) {
+            actionsBox.classList.add('opacity-30', 'pointer-events-none');
+            actionsBox.classList.remove('opacity-100', 'pointer-events-auto');
+          }
         }
         this.playSound('flip');
       }
 
-      getCurrentCard() {
-        return this.flashcardDeck[this.flashcardIndex] || { word: '', definition: '' };
-      }
+      async rateFlashcard(isKnown) {
+        const card = this.flashcardDeck[this.flashcardIndex];
+        if (!card) return;
 
-      nextCard() {
+        this.recordCardResult(card.id, isKnown);
+        this.playSound(isKnown ? 'correct' : 'error');
+
+        if (isKnown) {
+          this.toast('Слово отмечено: Знаю!', 'success');
+        } else {
+          this.toast('Слово добавлено на повторение', 'info');
+        }
+
         if (this.flashcardIndex < this.flashcardDeck.length - 1) {
           this.flashcardIndex++;
           this.updateFlashcardView();
         } else {
-          this.toast('Вы дошли до конца карточек!', 'info');
+          this.toast('Раунд карточек завершён!', 'success');
+          if (typeof confetti === 'function') confetti({ particleCount: 80, spread: 60 });
+          setTimeout(() => this.switchView('study'), 1200);
         }
       }
 
-      prevCard() {
-        if (this.flashcardIndex > 0) {
-          this.flashcardIndex--;
-          this.updateFlashcardView();
-        }
-      }
-
-      shuffleCards() {
-        for (let i = this.flashcardDeck.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [this.flashcardDeck[i], this.flashcardDeck[j]] = [this.flashcardDeck[j], this.flashcardDeck[i]];
-        }
-        this.flashcardIndex = 0;
-        this.updateFlashcardView();
-        this.toast('Карточки перемешаны');
-      }
-
-      async toggleStarCurrentCard() {
-        const card = this.flashcardDeck[this.flashcardIndex];
-        if (!card) return;
-        card.starred = !card.starred;
-        this.updateFlashcardView();
-
-        const set = this.sets.find(s => s.id === this.currentSetId);
-        if (set) {
-          const targetCard = set.cards.find(c => c.id === card.id);
-          if (targetCard) targetCard.starred = card.starred;
-          await this.persistSetToCloud(set);
-        }
-      }
-
-      recordCardResult(cardId, isSuccess) {
-        const set = this.sets.find(s => s.id === this.currentSetId);
-        if (!set) return;
-
-        const card = set.cards.find(c => c.id === cardId);
-        if (card) {
-          if (isSuccess) {
-            card.correctCount = (card.correctCount || 0) + 1;
-            if (card.correctCount >= 2) {
-              card.learned = true;
-            }
-          } else {
-            card.incorrectCount = (card.incorrectCount || 0) + 1;
-            card.learned = false;
-          }
-        }
-
-        set.lastStudied = Date.now();
-        this.persistSetToCloud(set);
-      }
-
-      startMode(modeName) {
+      startMode(modeName, options = {}) {
         const set = this.sets.find(s => s.id === this.currentSetId);
         if (!set || set.cards.length < 2) {
           this.toast('Для тренировки нужно минимум 2 карточки', 'error');
           return;
         }
 
-        if (modeName === 'flashcards') {
-          this.startFlashcardsMode();
+        if (modeName === 'flashcards' || modeName === 'flashcards-word-def') {
+          this.startFlashcardsMode('word-def', options);
+          return;
+        }
+        if (modeName === 'flashcards-def-word') {
+          this.startFlashcardsMode('def-word', options);
           return;
         }
 
         this.currentMode = modeName;
-        this.quizDeck = [...set.cards].sort(() => Math.random() - 0.5);
+        let cards = [...set.cards];
+        if (options.onlyStarred) {
+          cards = cards.filter(c => c.starred);
+          if (cards.length < 2) {
+            this.toast('Нужно минимум 2 избранные карточки для теста', 'error');
+            return;
+          }
+        }
+
+        this.quizDeck = cards.sort(() => Math.random() - 0.5);
         this.quizIndex = 0;
         this.quizCorrect = 0;
         this.quizIncorrect = 0;
@@ -1747,6 +1906,11 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           this.playSound('correct');
           input.classList.add('border-emerald-500', 'bg-emerald-50');
           this.showFeedback(true, 'Великолепно! Абсолютно верно.');
+
+          this.quizTimeoutId = setTimeout(() => {
+            this.quizIndex++;
+            this.loadNextQuizQuestion();
+          }, 1500);
         } else {
           this.quizIncorrect++;
           this.quizMistakes.push({
@@ -1756,8 +1920,56 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           });
           this.playSound('error');
           input.classList.add('border-rose-500', 'bg-rose-50');
-          this.showFeedback(false, `Правильный ответ: <span class="font-bold underline">${targetExpected}</span>`);
+
+          // Provide "Я ответил правильно" override button for synonyms and typos
+          const overrideHtml = `
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 w-full">
+              <span>Правильный ответ: <strong class="underline">${this.escapeHtml(targetExpected)}</strong></span>
+              <button onclick="app.overrideQuizAsCorrect()" class="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs shadow-sm transition-all shrink-0">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                <span>Я ответил правильно</span>
+              </button>
+            </div>
+          `;
+          this.showFeedback(false, overrideHtml);
+
+          this.quizTimeoutId = setTimeout(() => {
+            this.quizIndex++;
+            this.loadNextQuizQuestion();
+          }, 3200);
         }
+      }
+
+      overrideQuizAsCorrect() {
+        if (this.quizTimeoutId) {
+          clearTimeout(this.quizTimeoutId);
+          this.quizTimeoutId = null;
+        }
+
+        const currentCard = this.quizDeck[this.quizIndex];
+        if (!currentCard) return;
+
+        // Fix statistics
+        this.quizIncorrect = Math.max(0, this.quizIncorrect - 1);
+        this.quizCorrect++;
+        this.quizMistakes = this.quizMistakes.filter(m => m.card.id !== currentCard.id);
+
+        // Update card mastery
+        currentCard.correctCount = (currentCard.correctCount || 0) + 1;
+        if ((currentCard.incorrectCount || 0) > 0) currentCard.incorrectCount--;
+        if (currentCard.correctCount >= 2) currentCard.learned = true;
+
+        const set = this.sets.find(s => s.id === this.currentSetId);
+        if (set) this.persistSetToCloud(set);
+
+        this.playSound('correct');
+        this.showFeedback(true, 'Ответ успешно засчитан как правильный! 👍');
+
+        setTimeout(() => {
+          this.quizIndex++;
+          this.loadNextQuizQuestion();
+        }, 1100);
+      }
 
         setTimeout(() => {
           this.quizIndex++;
