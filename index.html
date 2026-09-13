@@ -1615,14 +1615,44 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
       nextCard() {
         if (this.flashcardDeck.length === 0) return;
-        this.flashcardIndex = (this.flashcardIndex + 1) % this.flashcardDeck.length;
-        this.updateFlashcardView();
+        this.transitionToCard((this.flashcardIndex + 1) % this.flashcardDeck.length, 'next');
       }
 
       prevCard() {
         if (this.flashcardDeck.length === 0) return;
-        this.flashcardIndex = (this.flashcardIndex - 1 + this.flashcardDeck.length) % this.flashcardDeck.length;
-        this.updateFlashcardView();
+        this.transitionToCard((this.flashcardIndex - 1 + this.flashcardDeck.length) % this.flashcardDeck.length, 'prev');
+      }
+
+      transitionToCard(newIndex, direction = 'next') {
+        const inner = document.getElementById('flashcardInner');
+        if (!inner) {
+          this.flashcardIndex = newIndex;
+          this.updateFlashcardView();
+          return;
+        }
+
+        if (this.isFlipped) {
+          // Скрываем карточку перед сменой индекса, чтобы исключить спойлер ответа
+          inner.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+          inner.style.opacity = '0';
+          setTimeout(() => {
+            inner.style.transition = 'none';
+            inner.classList.remove('rotate-y-180');
+            inner.style.transform = 'none';
+            this.isFlipped = false;
+            this.flashcardIndex = newIndex;
+            this.updateFlashcardView();
+            void inner.offsetHeight;
+            inner.style.transition = 'opacity 0.2s ease';
+            inner.style.opacity = '1';
+            setTimeout(() => {
+              if (inner) inner.style.transition = '';
+            }, 200);
+          }, 150);
+        } else {
+          this.flashcardIndex = newIndex;
+          this.updateFlashcardView();
+        }
       }
 
       shuffleCards() {
@@ -1632,6 +1662,15 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           [this.flashcardDeck[i], this.flashcardDeck[j]] = [this.flashcardDeck[j], this.flashcardDeck[i]];
         }
         this.flashcardIndex = 0;
+        const inner = document.getElementById('flashcardInner');
+        if (inner) {
+          inner.style.transition = 'none';
+          inner.classList.remove('rotate-y-180');
+          inner.style.transform = 'none';
+          void inner.offsetHeight;
+          inner.style.transition = '';
+        }
+        this.isFlipped = false;
         this.updateFlashcardView();
         this.toast('Карточки перемешаны', 'info');
       }
@@ -1690,6 +1729,14 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         this.flashcardDeck = cards;
         this.flashcardIndex = 0;
         this.isFlipped = false;
+
+        const inner = document.getElementById('flashcardInner');
+        if (inner) {
+          inner.style.transition = 'none';
+          inner.style.transform = 'none';
+          inner.style.opacity = '1';
+          inner.classList.remove('rotate-y-180');
+        }
 
         const modeBadge = document.getElementById('flashcardModeBadge');
         if (modeBadge) {
@@ -1788,14 +1835,49 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           this.toast('Слово добавлено на повторение', 'info');
         }
 
-        if (this.flashcardIndex < this.flashcardDeck.length - 1) {
-          this.flashcardIndex++;
-          this.updateFlashcardView();
-        } else {
-          this.toast('Раунд карточек завершён!', 'success');
-          if (typeof confetti === 'function') confetti({ particleCount: 80, spread: 60 });
-          setTimeout(() => this.switchView('study'), 1200);
+        const inner = document.getElementById('flashcardInner');
+        if (inner) {
+          // Плавная анимация смахивания в сторону ответа со скрытием
+          inner.style.transition = 'transform 0.18s ease, opacity 0.18s ease';
+          const shiftX = isKnown ? '50px' : '-50px';
+          inner.style.transform = `translateX(${shiftX}) rotateY(180deg) scale(0.96)`;
+          inner.style.opacity = '0';
         }
+
+        setTimeout(() => {
+          if (this.flashcardIndex < this.flashcardDeck.length - 1) {
+            this.flashcardIndex++;
+            if (inner) {
+              // Мгновенно возвращаем лицевую сторону пока карточка прозрачна
+              inner.style.transition = 'none';
+              inner.style.transform = 'none';
+              inner.classList.remove('rotate-y-180');
+            }
+            this.isFlipped = false;
+            this.updateFlashcardView();
+
+            if (inner) {
+              void inner.offsetHeight; // Принудительный reflow для применения стилей
+              // Плавное появление лицевой стороны нового слова
+              inner.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease';
+              inner.style.opacity = '1';
+              setTimeout(() => {
+                if (inner) inner.style.transition = '';
+              }, 200);
+            }
+          } else {
+            if (inner) {
+              inner.style.transition = 'none';
+              inner.style.transform = 'none';
+              inner.style.opacity = '1';
+              inner.classList.remove('rotate-y-180');
+            }
+            this.isFlipped = false;
+            this.toast('Раунд карточек завершён!', 'success');
+            if (typeof confetti === 'function') confetti({ particleCount: 80, spread: 60 });
+            setTimeout(() => this.switchView('study'), 1200);
+          }
+        }, 180);
       }
 
       startMode(modeName, options = {}) {
