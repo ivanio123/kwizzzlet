@@ -30,7 +30,7 @@
       -webkit-backface-visibility: hidden;
     }
     .rotate-y-180 {
-      transform: rotateY(180deg);
+      transform: rotateY(180deg) !important;
     }
     .card-flip {
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1633,12 +1633,12 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
         if (this.isFlipped) {
           // Скрываем карточку перед сменой индекса, чтобы исключить спойлер ответа
-          inner.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+          inner.style.transition = 'opacity 0.15s ease';
           inner.style.opacity = '0';
           setTimeout(() => {
             inner.style.transition = 'none';
+            inner.style.transform = '';
             inner.classList.remove('rotate-y-180');
-            inner.style.transform = 'none';
             this.isFlipped = false;
             this.flashcardIndex = newIndex;
             this.updateFlashcardView();
@@ -1646,10 +1646,14 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
             inner.style.transition = 'opacity 0.2s ease';
             inner.style.opacity = '1';
             setTimeout(() => {
-              if (inner) inner.style.transition = '';
+              if (inner) {
+                inner.style.transition = '';
+                inner.style.transform = '';
+              }
             }, 200);
           }, 150);
         } else {
+          inner.style.transform = '';
           this.flashcardIndex = newIndex;
           this.updateFlashcardView();
         }
@@ -1665,8 +1669,8 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         const inner = document.getElementById('flashcardInner');
         if (inner) {
           inner.style.transition = 'none';
+          inner.style.transform = '';
           inner.classList.remove('rotate-y-180');
-          inner.style.transform = 'none';
           void inner.offsetHeight;
           inner.style.transition = '';
         }
@@ -1732,8 +1736,8 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
         const inner = document.getElementById('flashcardInner');
         if (inner) {
-          inner.style.transition = 'none';
-          inner.style.transform = 'none';
+          inner.style.transition = '';
+          inner.style.transform = '';
           inner.style.opacity = '1';
           inner.classList.remove('rotate-y-180');
         }
@@ -1763,7 +1767,10 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
         this.isFlipped = false;
         const inner = document.getElementById('flashcardInner');
-        inner.classList.remove('rotate-y-180');
+        if (inner) {
+          inner.style.transform = '';
+          inner.classList.remove('rotate-y-180');
+        }
 
         // Hide knowledge buttons until flipped
         const actionsBox = document.getElementById('flashcardKnowledgeActions');
@@ -1802,8 +1809,12 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
       }
 
       flipCard() {
-        this.isFlipped = !this.isFlipped;
         const inner = document.getElementById('flashcardInner');
+        if (!inner) return;
+
+        // Очищаем инлайн-стили трансформации, чтобы CSS-класс сработал без конфликтов
+        inner.style.transform = '';
+        this.isFlipped = !this.isFlipped;
         const actionsBox = document.getElementById('flashcardKnowledgeActions');
 
         if (this.isFlipped) {
@@ -1837,10 +1848,8 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
 
         const inner = document.getElementById('flashcardInner');
         if (inner) {
-          // Плавная анимация смахивания в сторону ответа со скрытием
-          inner.style.transition = 'transform 0.18s ease, opacity 0.18s ease';
-          const shiftX = isKnown ? '50px' : '-50px';
-          inner.style.transform = `translateX(${shiftX}) rotateY(180deg) scale(0.96)`;
+          // Плавная анимация растворения
+          inner.style.transition = 'opacity 0.18s ease';
           inner.style.opacity = '0';
         }
 
@@ -1848,27 +1857,28 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           if (this.flashcardIndex < this.flashcardDeck.length - 1) {
             this.flashcardIndex++;
             if (inner) {
-              // Мгновенно возвращаем лицевую сторону пока карточка прозрачна
               inner.style.transition = 'none';
-              inner.style.transform = 'none';
+              inner.style.transform = '';
               inner.classList.remove('rotate-y-180');
             }
             this.isFlipped = false;
             this.updateFlashcardView();
 
             if (inner) {
-              void inner.offsetHeight; // Принудительный reflow для применения стилей
-              // Плавное появление лицевой стороны нового слова
-              inner.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease';
+              void inner.offsetHeight;
+              inner.style.transition = 'opacity 0.2s ease';
               inner.style.opacity = '1';
               setTimeout(() => {
-                if (inner) inner.style.transition = '';
+                if (inner) {
+                  inner.style.transition = '';
+                  inner.style.transform = '';
+                }
               }, 200);
             }
           } else {
             if (inner) {
-              inner.style.transition = 'none';
-              inner.style.transform = 'none';
+              inner.style.transition = '';
+              inner.style.transform = '';
               inner.style.opacity = '1';
               inner.classList.remove('rotate-y-180');
             }
