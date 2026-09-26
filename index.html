@@ -71,6 +71,12 @@
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span id="cloudSyncText">Облако подключено</span>
         </div>
+
+        <!-- Кнопка принудительной выгрузки локального прогресса в облако -->
+        <button id="forceSyncCloudBtn" onclick="app.forcePushLocalToCloud()" title="Отправить локальный прогресс в облако" class="hidden sm:inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200 transition-all">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          <span>Синхронизировать</span>
+        </button>
         
         <!-- Auth Profile Badge / Login Button -->
         <div id="authAccountArea" class="flex items-center">
@@ -655,7 +661,7 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
   <!-- либо заполнить поля объекта ниже: -->
   <!-- ================================================================= -->
   <script>
-  const firebaseConfig = {
+    const firebaseConfig = {
 	apiKey: "AIzaSyD-4COpD94qna1khu91R0-gbsfR7LKa7mc",
 	authDomain: "kwizzzlet-web.firebaseapp.com",
 	projectId: "kwizzzlet-web",
@@ -851,10 +857,17 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
         const userEmailLabel = document.getElementById('userEmailLabel');
         const userAvatarLetter = document.getElementById('userAvatarLetter');
         const cloudBadge = document.getElementById('cloudSyncBadge');
-
-        if (cloudBadge) cloudBadge.classList.remove('hidden');
+        const cloudText = document.getElementById('cloudSyncText');
+        const forceSyncBtn = document.getElementById('forceSyncCloudBtn');
 
         if (user && !user.isAnonymous) {
+          if (cloudBadge) {
+            cloudBadge.classList.remove('hidden', 'bg-amber-50', 'text-amber-700', 'border-amber-200');
+            cloudBadge.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+          }
+          if (cloudText) cloudText.innerText = 'Облако подключено';
+          if (forceSyncBtn) forceSyncBtn.classList.remove('hidden');
+
           if (loginBtn) loginBtn.classList.add('hidden');
           if (userBadge) {
             userBadge.classList.remove('hidden');
@@ -864,6 +877,13 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           if (userEmailLabel) userEmailLabel.innerText = displayName;
           if (userAvatarLetter) userAvatarLetter.innerText = displayName.charAt(0).toUpperCase();
         } else {
+          if (cloudBadge) {
+            cloudBadge.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+            cloudBadge.classList.add('bg-amber-50', 'text-amber-700', 'border-amber-200');
+          }
+          if (cloudText) cloudText.innerText = 'Локальный режим (не в сети)';
+          if (forceSyncBtn) forceSyncBtn.classList.add('hidden');
+
           if (loginBtn) loginBtn.classList.remove('hidden');
           if (userBadge) {
             userBadge.classList.add('hidden');
@@ -888,18 +908,56 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
             return;
           }
 
-          const loadedSets = [];
+          const cloudSets = [];
           snapshot.forEach(docSnap => {
-            loadedSets.push({ id: docSnap.id, ...docSnap.data() });
+            cloudSets.push({ id: docSnap.id, ...docSnap.data() });
           });
 
-          loadedSets.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-          this.sets = loadedSets;
-          
-          // Сохраняем копию в локальный кэш, чтобы данные не пропадали при сбросе сессии
+          // Умное слияние (Smart Merge): объединяем облако с локальным кэшем,
+          // чтобы максимальный прогресс (например, 250 слов против 139) не затирался!
+          let hasLocalAdvantage = false;
+          const mergedSets = cloudSets.map(cloudSet => {
+            const localSet = this.sets.find(ls => ls.id === cloudSet.id);
+            if (!localSet || !localSet.cards) return cloudSet;
+
+            const mergedCards = cloudSet.cards.map(cCard => {
+              const lCard = localSet.cards.find(lc => lc.id === cCard.id);
+              if (!lCard) return cCard;
+
+              const isLearned = cCard.learned || lCard.learned;
+              const isStarred = cCard.starred || lCard.starred;
+              const correct = Math.max(cCard.correctCount || 0, lCard.correctCount || 0);
+              const incorrect = Math.max(cCard.incorrectCount || 0, lCard.incorrectCount || 0);
+
+              if (lCard.learned && !cCard.learned) hasLocalAdvantage = true;
+              if (lCard.starred && !cCard.starred) hasLocalAdvantage = true;
+
+              return {
+                ...cCard,
+                learned: isLearned,
+                starred: isStarred,
+                correctCount: correct,
+                incorrectCount: incorrect
+              };
+            });
+
+            return {
+              ...cloudSet,
+              cards: mergedCards
+            };
+          });
+
+          mergedSets.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          this.sets = mergedSets;
+
           try {
             localStorage.setItem('lexicards_offline_sets', JSON.stringify(this.sets));
           } catch (e) {}
+
+          // Если локально было выучено больше, чем в облаке — сразу досылаем разницу в облако!
+          if (hasLocalAdvantage) {
+            this.sets.forEach(s => this.persistSetToCloud(s));
+          }
 
           this.renderSetsList();
 
@@ -913,6 +971,26 @@ sun - солнце" class="w-full p-3 font-mono text-xs bg-white border border-s
           console.error('Firestore onSnapshot error:', error);
           this.toast('Ошибка синхронизации с облаком', 'error');
         });
+      }
+
+      async forcePushLocalToCloud() {
+        if (!this.db || !this.userId) {
+          this.toast('Сначала войдите в аккаунт для синхронизации', 'info');
+          this.openAuthModal();
+          return;
+        }
+
+        try {
+          let count = 0;
+          for (const set of this.sets) {
+            await this.persistSetToCloud(set);
+            count++;
+          }
+          this.toast(`Успешно! Все модули (${count}) отправлены в облако`, 'success');
+        } catch (e) {
+          console.error('Force sync error:', e);
+          this.toast('Ошибка при отправке в облако', 'error');
+        }
       }
 
       openAuthModal() {
